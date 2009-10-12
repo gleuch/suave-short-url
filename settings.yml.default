@@ -1,0 +1,38 @@
+development: &local
+  # Critical Settings
+  site_name:        Know Your Meme Short URL Service
+  site_url:         http://meme.ly
+
+  db_connection:    sqlite3:///ROOT/urls_dev.db
+
+
+  # Performance and Options
+  enable_service_urls:      false
+  enable_public_creation:   false
+  enable_default_redirect:  true
+  
+  default_redirect_url:     http://bit.ly/%s   # Use %s to insert short code into url
+
+  use_g_analytics:          false
+  g_analytics_code:         UA-XXXXXXX-XX
+
+
+production:
+  <<: *local
+  
+  db_connection:    sqlite3:///ROOT/urls_prod.db
+
+  enable_service_urls:      true
+  enable_public_creation:   false
+
+  use_g_analytics:          true
+
+staging:
+  <<: *local
+  
+  db_connection:  sqlite3:///ROOT/urls_staging.db
+
+test:
+  <<: *local
+
+  db_connection:  sqlite3:///ROOT/urls_test.db
