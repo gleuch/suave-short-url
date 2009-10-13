@@ -2,12 +2,12 @@ class Redirect
   include DataMapper::Resource
 
   property :id,               Serial
-  property :slug,             String
+  property :slug,             String,     :index => true
   property :service_url,      String
   property :destination_url,  String
   property :views_count,      Integer
   property :created_at,       DateTime
-  property :active,           Boolean
+  property :active,           Boolean,    :default => true
 
 
   has n, :audits

@@ -31,19 +31,15 @@ helpers do
 
   # Get the redirect information via the slug
   def get_redirect(slug)
-    @redirect = Redirect.find_by_slug(slug) rescue nil
-    smart_haml :not_found and return if @redirect.blank?
+    @redirect = Redirect.first(:slug => slug) rescue nil
   end
 
   def smart_title
     if request.path =~ /\/login/i;      @title = 'Login'
     elsif request.path =~ /\/signup/i;  @title = 'Signup'
     elsif request.path =~ /\/logout/i;  @title = 'Logout'
-    elsif request.path =~ /\/users/i;   @title = 'Users'
-    end
-
+    elsif request.path =~ /\/users/i;   @title = 'Users'; end
     (@title ||= '') << "#{!@title.blank? ? ' / ' : ''}#{configatron.site_name}"
-
     @title
   end
 
@@ -66,6 +62,7 @@ end
 # List all redirects
 get '/list' do
   allowed_to
+  @redirects = Redirect.all
   smart_haml :list
 end
 
@@ -80,7 +77,7 @@ end
 post '/create' do
   allowed_to
 
-  if @redirect = Redirect.create(params[:slug])
+  if @redirect = Redirect.create(params[:slug].merge(:active => true))
     redirect("/#{@redirect.slug}/info", :status => 303)
   else
     @error = 'An error occured while attempting to create this redirect.'
@@ -95,7 +92,7 @@ get %r{\/([\w\/]+)\/edit} do
   slug = params[:captures].first
   get_redirect(slug)
 
-  smart_haml :edit
+  smart_haml (!@redirect.blank? ? :edit : :not_found)
 end
 
 # Update the redirect
@@ -104,12 +101,17 @@ post %r{\/([\w\/]+)\/update} do
 
   slug = params[:captures].first
   get_redirect(slug)
-  
-  if @redirect.update_attributes(params[:slug])
-    redirect("/#{@redirect.slug}/info", :status => 303)
+  smart_haml :not_found and return if @redirect.blank?
+
+  unless @redirect.blank?
+    if @redirect.update_attributes(params[:slug])
+      redirect("/#{@redirect.slug}/info", :status => 303)
+    else
+      @error = 'An error occured while attempting to update this redirect.'
+      smart_haml :error
+    end
   else
-    @error = 'An error occured while attempting to update this redirect.'
-    smart_haml :error
+    smart_haml :not_found
   end
 end
 
@@ -120,11 +122,15 @@ delete %r{\/([\w\/]+)\/delete} do
   slug = params[:captures].first
   get_redirect(slug)
 
-  if @redirect.update_attributes(:active => false)
-    redirect("/#{@redirect.slug}/info", :status => 303)
+  unless @redirect.blank?
+    if @redirect.update_attributes(:active => false)
+      redirect("/#{@redirect.slug}/info", :status => 303)
+    else
+      @error = 'An error occured while attempting to delete this redirect.'
+      smart_haml :error
+    end
   else
-    @error = 'An error occured while attempting to delete this redirect.'
-    smart_haml :error
+    smart_haml :not_found
   end
 end
 
@@ -134,8 +140,7 @@ get %r{\/([\w\/]+)\/info} do
 
   slug = params[:captures].first
   get_redirect(slug)
-
-  smart_haml :info
+  smart_haml (!@redirect.blank? ? :info : :not_found)
 end
 
 
