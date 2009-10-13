@@ -1,0 +1,38 @@
+      _____                           _____ __               __     __  ______  __        
+     / ___/__  ______ __   _____     / ___// /_  ____  _____/ /_   / / / / __ \/ /   _____
+     \__ \/ / / / __ `/ | / / _ \    \__ \/ __ \/ __ \/ ___/ __/  / / / / /_/ / /   / ___/
+    ___/ / /_/ / /_/ /| |/ /  __/   ___/ / / / / /_/ / /  / /_   / /_/ / _, _/ /___(__  ) 
+   /____/\__,_/\__,_/ |___/\___/   /____/_/ /_/\____/_/   \__/   \____/_/ |_/_____/____/  
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Suave Short URL Service by Greg Leuch <http://www.gleuch.com>
+  Copyfree 2009.
+
+  Source Code: http://github.com/gleuch/suave-short-urls
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  ###
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+INSTALLATION
+  * Rename settings.yml.default to settings.yml.
+  * Edit the settings.yml to your specifications. Ensure your database information is correct.
+  * Edit the config.ru file (if using Passenger) to your specifications.
+  * Run!
+
+
+KNOWN BUGS
+  * ---
+
+
+TODO
+  * (-- in progress --)
+
+
+NOTES
+  * If you wish to run in private mode, you must create a user account at */signup. Since signup is publicly
+    accessible, you must manually edit the permission_level on your user(s) to 2. After creation, login at */login,
+    and create away.

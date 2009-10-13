@@ -1,0 +1,28 @@
+!!!
+%html{:xmlns => 'http://www.w3.org/1999/xhtml', :'xml:lang' => 'en', :lang => 'en'}
+  %head
+    %title= smart_title
+    %meta{:"http-equiv" => 'Content-Type', :content => 'text/html; charset=utf-8'}
+    %link{:rel => 'icon', :href => "/#{configatron.template_folder_path.gsub(/\%s/, 'favicon.ico')}"}
+    %link{:href => "/#{configatron.template_folder_path.gsub(/\%s/, 'stylesheets/screen.css')}", :media => 'all', :rel => 'stylesheet', :type => 'text/css'}
+    %base{:href => "http://#{request.env['HTTP_HOST']}/"}
+
+  %body#docs
+    #container
+      #header
+        %h1#logo<>
+          %a{:href => "/"}
+            %img{:src => "/#{configatron.template_folder_path.gsub(/\%s/, 'images/logo.png')}", :width => "204", :height => "74", :title => configatron.site_name, :alt => ""}
+
+      #content_area
+        #content
+          .c
+            = yield
+
+      #footer
+        %p.tiny
+          &copy; #{Time.now.year} <a href="/">#{configatron.site_name}</a>
+
+    - if configatron.use_g_analytics == true && !configatron.g_analytics_code.blank? && configatron.g_analytics_code != 'UA-#######-##'
+      %script{:type => "text/javascript"} var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www."); document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+      %script{:type => "text/javascript"} try {var pageTracker = _gat._getTracker("#{configatron.g_analytics_code}"); pageTracker._trackPageview();} catch(err) {}
