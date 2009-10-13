@@ -60,23 +60,20 @@ end #helpers
 
 # Homepage
 get '/' do
-
-  STDERR.puts request.inspect
   smart_haml :index
 end
 
 # List all redirects
 get '/list' do
   allowed_to
-
   smart_haml :list
 end
 
 # Redirect create form
 get '/new' do
   allowed_to
-
-  smart_haml :new
+  @redirect = Redirect.new
+  smart_haml :edit
 end
 
 # Create the redirect

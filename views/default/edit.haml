@@ -1,0 +1,21 @@
+- params[:slug] ||= {}
+
+%h1= !@redirect.new_record? ? 'Edit Redirect' : 'Create a Redirect'
+
+%form{:action => (!@redirect.new_record? ? "#{@redirect.slug}/update" : "/create"), :method => "post"}
+  %fieldset.first
+    %fieldset
+      %label{:for => :slug} Slug (Short Code)
+      %p<>
+        %input{:type => :text, :name => 'slug[slug]', :id => :slug, :value => params[:slug][:slug] || @redirect.slug}
+    %fieldset
+      %label{:for => :destination_url} Destination
+      %p<>
+        %input{:type => :text, :name => 'slug[destination_url]', :id => :destination_url, :value => params[:slug][:destination_url] || @redirect.destination_url}
+    %fieldset
+      %label{:for => :service_url} Service
+      %p<>
+        %input{:type => :text, :name => 'slug[service_url]', :id => :service_url, :value => params[:slug][:service_url] || @redirect.service_url}
+    %fieldset.buttons.c
+      %button.left{:onclick => "window.location='/#{@redirect.slug.gsub(/'/, "\'") unless @redirect.new_record?}'; return false;"} Cancel
+      %input.right{:type => :submit, :value => (!@redirect.new_record? ? 'Update' : 'Create')}
